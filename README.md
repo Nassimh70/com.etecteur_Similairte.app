@@ -84,20 +84,10 @@ Options principales : `--level {1,2,3,auto}`, `--kgram N`,
 `--gst-min N`, `--min-frag N`, `--keep-comments`, `--csv PATH`,
 `--html PATH`.
 
-### Exécution sans Python (exécutable Windows)
+### Génération des exécutables Windows (optionnel)
 
-Des exécutables autonomes sont fournis dans `dist\` :
-
-- **`dist\DetecteurDeSimilarite\`** — version graphique ; lancer
-  `DetecteurDeSimilarite.exe` (dossier `samples\` joint pour démonstration).
-- **`dist\CLI-Similarite\`** — version console ; même usage que `cli.py` :
-
-```bash
-dist\CLI-Similarite\CLI-Similarite.exe --ref samples\identical\bubble_sort_ref.py \
-     --cands samples\modified\bubble_sort_renamed.py --level auto
-```
-
-Pour **reconstruire** les exécutables (après modification du code) :
+Les exécutables ne sont pas versionnés dans le dépôt. Pour les générer
+localement (nécessite PyInstaller) :
 
 ```bash
 pip install pyinstaller
@@ -105,9 +95,20 @@ py -m PyInstaller tools/detecteur_similarite.spec --noconfirm   # version graphi
 py -m PyInstaller tools/cli_similarite.spec --noconfirm         # version console
 ```
 
+Les deux exécutables sont produits dans `dist\` :
+
+- **`dist\DetecteurDeSimilarite\`** — version graphique ; lancer
+  `DetecteurDeSimilarite.exe` (copier `samples\` à côté pour la démonstration).
+- **`dist\CLI-Similarite\`** — version console ; même usage que `cli.py` :
+
+```bash
+dist\CLI-Similarite\CLI-Similarite.exe --ref samples\identical\bubble_sort_ref.py \
+     --cands samples\modified\bubble_sort_renamed.py --level auto
+```
+
 Les spécifications `tools/*.spec` déclarent les grammaires *tree-sitter* comme
 imports cachés (elles sont chargées dynamiquement et sinon absentes du
-paquet). Chaque dossier `dist\...` contient déjà une copie de `samples\`.
+paquet).
 
 ### Évaluation
 
@@ -155,9 +156,8 @@ projet/
 │   └── console.py             #   Rendu texte de la CLI
 ├── evaluation/                # Scénarios étiquetés, métriques, graphiques
 ├── samples/                   # Jeu d'essai organisé par catégorie
-├── tools/                     # Spécifications PyInstaller (reconstruction)
-├── docs/                      # Rapport de projet (Markdown + PDF)
-└── dist/                      # Exécutables Windows préconstruits
+├── rapport/                   # Rapport technique (LaTeX + PDF)
+└── tools/                     # Spécifications PyInstaller (génération de dist/)
 ```
 
 ## Seuils et interprétation
@@ -170,7 +170,7 @@ projet/
 
 Le niveau 3 est conçu pour la comparaison **inter-langages** : sur des
 fichiers de même langage, préférer les niveaux 1 et 2, plus discriminants
-(voir `docs/rapport.md` pour la discussion détaillée).
+(voir `rapport/rapport.pdf` pour la discussion détaillée).
 
 ## Auteur
 
